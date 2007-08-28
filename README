@@ -1,0 +1,8 @@
+== Ruby Crowd -- Integrating Ruby with Atlassian Crowd
+
+Ruby Crowd provides a Ruby wrapper around the Atlassian Crowd's SOAP API
+
+http://atlassian.com/crowd
+
+http://confluence.atlassian.com/display/CROWD/Crowd+Documentation
+

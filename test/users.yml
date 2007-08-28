@@ -1,0 +1,16 @@
+user_1:
+    user_name: jane
+    first_name: Jane
+    last_name: Test
+    password: password
+    email: jane.test@chariotsolutions.com
+    groups: 
+        - registered-users
+    
+user_2:
+    user_name: joe
+    first_name: Joe
+    last_name: Test
+    password: password
+    email: joe.test@chariotsolutions.com
+    
