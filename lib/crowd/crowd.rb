@@ -10,10 +10,14 @@ class Crowd
   # testing only
   # attr_reader :server, :server_token
   
-  def initialize
-    # TODO die if configuration file is missing
-    # TODO allow config file location
-    @configuration = configuration
+  def initialize( config=nil )
+    if config 
+      @configuration = config
+    else
+      # TODO die if configuration file is missing
+      @configuration = configuration
+    end
+    
     crowd_server_url = @configuration['crowd_server_url']
     @server = SecurityServerPortType.new(crowd_server_url)
 
