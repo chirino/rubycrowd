@@ -103,6 +103,33 @@ class Crowd
     @server.updatePrincipalAttribute UpdatePrincipalAttribute.new(@server_token, user_name, soap_attribute)
   end
   
+  def add_group(group_name, group_description="")    
+    group = SOAPGroup.new
+    group.active = true
+    group.name = group_name
+    group.description = group_description
+    response = @server.addGroup(AddGroup.new(@server_token, group))
+    response.out
+  end 
+  
+  def delete_group!(group_name)    
+    @server.removeGroup(RemoveGroup.new(@server_token, group_name))
+  end 
+  
+  def find_all_group_names()    
+    response = @server.findAllGroupNames(FindAllGroupNames.new(@server_token))
+    response.out
+  end 
+  
+  def find_users_in_group(group_name)
+    response = @server.findGroupByName(FindGroupByName.new(@server_token, group_name))
+    if response.out
+      return response.out.members
+    else
+      return nil
+    end
+  end
+
   def add_user_to_group(user_name, group_name)
     @server.addPrincipalToGroup(AddPrincipalToGroup.new(@server_token, user_name, group_name))    
   end
