@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 gem 'soap4r'
+require 'yaml'
 require 'crowd/defaultDriver.rb'
 
 # Wrapper around Atlassian Crowd's SOAP API

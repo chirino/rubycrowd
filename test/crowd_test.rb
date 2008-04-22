@@ -5,7 +5,7 @@ class CrowdTest < Test::Unit::TestCase
   
   def setup
     load_fixtures "users"
-    $DEBUG = true
+    $DEBUG = false #true
     @crowd = Crowd.new
     ensure_user_exists @user_1
   end
@@ -61,7 +61,7 @@ class CrowdTest < Test::Unit::TestCase
   
   def test_authenticate_invalid_user
     user_name = "ZZZZZZZZZZZZ"
-    assert_soap_fault "Principal = #{user_name}" do
+    assert_soap_fault "No such account" do
       token = @crowd.authenticate_user(user_name, @user_1.password)
     end
   end
@@ -85,7 +85,7 @@ class CrowdTest < Test::Unit::TestCase
     application_name = "crowd"
     #assert_soap_fault "Application: #{application_name} Principal: #{@user_1.name}" do
     # TODO fix message in Custom Java Code
-    assert_soap_fault "Principal = #{@user_1.name}" do
+    assert_soap_fault "Application: #{application_name} Principal: #{@user_1.name}" do
       @crowd.authenticate_user(@user_1.name, @user_1.password, application_name)
     end
   end
@@ -124,7 +124,7 @@ class CrowdTest < Test::Unit::TestCase
   end
   
   def test_add_duplicate_user_name
-    assert_soap_fault "Name = #{@user_1.name}" do
+    assert_soap_fault "Principal already exists with name #{@user_1.name}" do
       user = @crowd.add_user(@user_1.name, "X#{@user_1.email}", "X#{@user_1.first_name}", "X#{@user_1.last_name}", "X#{@user_1.password}" )
     end
   end
@@ -187,22 +187,22 @@ class CrowdTest < Test::Unit::TestCase
   def test_group
     
     user = @user_1
-    group = 'crowd-administrators'
+    group = 'crowd-admin'
     
     assert (not @crowd.group_member? user.name, group), "#{user.name} is already a member of group #{group}"
-
+puts 1
     @crowd.add_user_to_group user.name, group    
     assert (@crowd.group_member? user.name, group)    
-
+puts 2
     groups = @crowd.find_group_memberships user.name
     assert (groups.length > 0)
     assert (groups.include? group)
-
+puts 3
     @crowd.remove_user_from_group user.name, group    
     assert (not @crowd.group_member? user.name, group)
-
+puts 4
     groups_after_remove = @crowd.find_group_memberships user.name
-
+puts 5
     # ensure the user in one less group 
     assert_equal groups.length - 1, groups_after_remove.length
     
