@@ -5,7 +5,7 @@ class CrowdGroupTest < Test::Unit::TestCase
   
   def setup
     load_user_fixtures "users"
-    $DEBUG = true
+    $DEBUG = false
     @crowd = Crowd.new
     ensure_user_exists @user_1
     ensure_user_exists @user_2
@@ -62,7 +62,7 @@ class CrowdGroupTest < Test::Unit::TestCase
     assert rc.length==1
     
     users = @crowd.find_users_in_group(rc[0]);
-    p users
+    # p users
     assert_equal [@user_1.name, @user_2.name].sort, users.sort
   end
 

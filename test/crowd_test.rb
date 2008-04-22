@@ -5,7 +5,7 @@ class CrowdTest < Test::Unit::TestCase
   
   def setup
     load_fixtures "users"
-    $DEBUG = false #true
+    $DEBUG = false
     @crowd = Crowd.new
     ensure_user_exists @user_1
   end
@@ -187,22 +187,22 @@ class CrowdTest < Test::Unit::TestCase
   def test_group
     
     user = @user_1
-    group = 'crowd-admin'
+    group = 'customer-test'
     
     assert (not @crowd.group_member? user.name, group), "#{user.name} is already a member of group #{group}"
-puts 1
+
     @crowd.add_user_to_group user.name, group    
     assert (@crowd.group_member? user.name, group)    
-puts 2
+
     groups = @crowd.find_group_memberships user.name
     assert (groups.length > 0)
     assert (groups.include? group)
-puts 3
+
     @crowd.remove_user_from_group user.name, group    
     assert (not @crowd.group_member? user.name, group)
-puts 4
+
     groups_after_remove = @crowd.find_group_memberships user.name
-puts 5
+
     # ensure the user in one less group 
     assert_equal groups.length - 1, groups_after_remove.length
     
@@ -246,7 +246,6 @@ puts 5
     assert_soap_fault "Login failed" do
       token = @crowd.authenticate_user(@user_1.name, @user_1.password)
     end
-    @crowd.reset_password! nil
   end
   
   #-- this is overkill, could have just hardcoded user objects into the test

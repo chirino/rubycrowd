@@ -1,9 +1,8 @@
 require 'xsd/qname'
 
-# Generated with wsdl2ruby
-# wsdl2ruby.rb --wsdl http://localhost:8095/crowd/services/SecurityServer?wsdl --type client
-
 # {http://authentication.integration.crowd.atlassian.com}AuthenticatedToken
+#   name - SOAP::SOAPString
+#   token - SOAP::SOAPString
 class AuthenticatedToken
   attr_accessor :name
   attr_accessor :token
@@ -15,6 +14,9 @@ class AuthenticatedToken
 end
 
 # {http://authentication.integration.crowd.atlassian.com}ApplicationAuthenticationContext
+#   credential - PasswordCredential
+#   name - SOAP::SOAPString
+#   validationFactors - ArrayOfValidationFactor
 class ApplicationAuthenticationContext
   attr_accessor :credential
   attr_accessor :name
@@ -27,11 +29,26 @@ class ApplicationAuthenticationContext
   end
 end
 
+# {http://authentication.integration.crowd.atlassian.com}PasswordCredential
+#   credential - SOAP::SOAPString
+#   encryptedCredential - SOAP::SOAPBoolean
+class PasswordCredential
+  attr_accessor :credential
+  attr_accessor :encryptedCredential
+
+  def initialize(credential = nil, encryptedCredential = nil)
+    @credential = credential
+    @encryptedCredential = encryptedCredential
+  end
+end
+
 # {http://authentication.integration.crowd.atlassian.com}ArrayOfValidationFactor
 class ArrayOfValidationFactor < ::Array
 end
 
 # {http://authentication.integration.crowd.atlassian.com}ValidationFactor
+#   name - SOAP::SOAPString
+#   value - SOAP::SOAPString
 class ValidationFactor
   attr_accessor :name
   attr_accessor :value
@@ -42,18 +59,11 @@ class ValidationFactor
   end
 end
 
-# {http://authentication.integration.crowd.atlassian.com}PasswordCredential
-class PasswordCredential
-  attr_accessor :credential
-  attr_accessor :encryptedCrednetial
-
-  def initialize(credential = nil, encryptedCrednetial = nil)
-    @credential = credential
-    @encryptedCrednetial = encryptedCrednetial
-  end
-end
-
 # {http://authentication.integration.crowd.atlassian.com}PrincipalAuthenticationContext
+#   application - SOAP::SOAPString
+#   credential - PasswordCredential
+#   name - SOAP::SOAPString
+#   validationFactors - ArrayOfValidationFactor
 class PrincipalAuthenticationContext
   attr_accessor :application
   attr_accessor :credential
@@ -73,6 +83,14 @@ class ArrayOfString < ::Array
 end
 
 # {http://soap.integration.crowd.atlassian.com}SOAPPrincipal
+#   iD - SOAP::SOAPLong
+#   active - SOAP::SOAPBoolean
+#   attributes - ArrayOfSOAPAttribute
+#   conception - SOAP::SOAPDateTime
+#   description - SOAP::SOAPString
+#   directoryID - SOAP::SOAPLong
+#   lastModified - SOAP::SOAPDateTime
+#   name - SOAP::SOAPString
 class SOAPPrincipal
   attr_accessor :iD
   attr_accessor :active
@@ -100,6 +118,8 @@ class ArrayOfSOAPAttribute < ::Array
 end
 
 # {http://soap.integration.crowd.atlassian.com}SOAPAttribute
+#   name - SOAP::SOAPString
+#   values - ArrayOfString
 class SOAPAttribute
   attr_accessor :name
   attr_accessor :values
@@ -111,6 +131,15 @@ class SOAPAttribute
 end
 
 # {http://soap.integration.crowd.atlassian.com}SOAPRole
+#   iD - SOAP::SOAPLong
+#   active - SOAP::SOAPBoolean
+#   attributes - ArrayOfSOAPAttribute
+#   conception - SOAP::SOAPDateTime
+#   description - SOAP::SOAPString
+#   directoryID - SOAP::SOAPLong
+#   lastModified - SOAP::SOAPDateTime
+#   members - ArrayOfString
+#   name - SOAP::SOAPString
 class SOAPRole
   attr_accessor :iD
   attr_accessor :active
@@ -140,6 +169,8 @@ class ArrayOfSearchRestriction < ::Array
 end
 
 # {http://soap.integration.crowd.atlassian.com}SearchRestriction
+#   name - SOAP::SOAPString
+#   value - SOAP::SOAPString
 class SearchRestriction
   attr_accessor :name
   attr_accessor :value
@@ -155,6 +186,15 @@ class ArrayOfSOAPGroup < ::Array
 end
 
 # {http://soap.integration.crowd.atlassian.com}SOAPGroup
+#   iD - SOAP::SOAPLong
+#   active - SOAP::SOAPBoolean
+#   attributes - ArrayOfSOAPAttribute
+#   conception - SOAP::SOAPDateTime
+#   description - SOAP::SOAPString
+#   directoryID - SOAP::SOAPLong
+#   lastModified - SOAP::SOAPDateTime
+#   members - ArrayOfString
+#   name - SOAP::SOAPString
 class SOAPGroup
   attr_accessor :iD
   attr_accessor :active
@@ -189,165 +229,67 @@ end
 
 # {http://exception.integration.crowd.atlassian.com}InvalidAuthorizationTokenException
 class InvalidAuthorizationTokenException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
 # {http://exception.integration.crowd.atlassian.com}ObjectNotFoundException
 class ObjectNotFoundException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
 # {http://exception.integration.crowd.atlassian.com}InvalidAuthenticationException
 class InvalidAuthenticationException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
-# {http://exception.integration.crowd.atlassian.com}DirectoryPermissionException
-class DirectoryPermissionException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+# {http://exception.integration.crowd.atlassian.com}ApplicationPermissionException
+class ApplicationPermissionException
+  def initialize
   end
 end
 
 # {http://exception.integration.crowd.atlassian.com}InvalidRoleException
 class InvalidRoleException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
 # {http://exception.integration.crowd.atlassian.com}InvalidTokenException
 class InvalidTokenException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
 # {http://exception.integration.crowd.atlassian.com}InvalidGroupException
 class InvalidGroupException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
-  end
-end
-
-# {http://exception.integration.crowd.atlassian.com}InvalidCredentialException
-class InvalidCredentialException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
-  end
-end
-
-# {http://exception.integration.crowd.atlassian.com}InvalidPrincipalException
-class InvalidPrincipalException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
 # {http://exception.integration.crowd.atlassian.com}InactiveAccountException
 class InactiveAccountException
-  attr_accessor :cause
-  attr_accessor :messages
-  attr_accessor :throwableCount
-  attr_accessor :throwables
-
-  def initialize(cause = nil, messages = nil, throwableCount = nil, throwables = nil)
-    @cause = cause
-    @messages = messages
-    @throwableCount = throwableCount
-    @throwables = throwables
+  def initialize
   end
 end
 
-# {http://lang.java}ArrayOfThrowable
-class ArrayOfThrowable < ::Array
+# {http://exception.integration.crowd.atlassian.com}InvalidCredentialException
+class InvalidCredentialException
+  def initialize
+  end
 end
 
-# {http://lang.java}Throwable
-class Throwable
+# {http://exception.integration.crowd.atlassian.com}InvalidPrincipalException
+class InvalidPrincipalException
   def initialize
   end
 end
 
 # {http://rmi.java}RemoteException
+#   cause - Throwable
+#   message - SOAP::SOAPString
 class RemoteException
   attr_accessor :cause
   attr_accessor :message
@@ -358,7 +300,15 @@ class RemoteException
   end
 end
 
+# {http://lang.java}Throwable
+class Throwable
+  def initialize
+  end
+end
+
 # {urn:SecurityServer}findPrincipalByName
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class FindPrincipalByName
   attr_accessor :in0
   attr_accessor :in1
@@ -370,6 +320,7 @@ class FindPrincipalByName
 end
 
 # {urn:SecurityServer}findPrincipalByNameResponse
+#   out - SOAPPrincipal
 class FindPrincipalByNameResponse
   attr_accessor :out
 
@@ -379,6 +330,7 @@ class FindPrincipalByNameResponse
 end
 
 # {urn:SecurityServer}authenticateApplication
+#   in0 - ApplicationAuthenticationContext
 class AuthenticateApplication
   attr_accessor :in0
 
@@ -388,6 +340,7 @@ class AuthenticateApplication
 end
 
 # {urn:SecurityServer}authenticateApplicationResponse
+#   out - AuthenticatedToken
 class AuthenticateApplicationResponse
   attr_accessor :out
 
@@ -397,6 +350,9 @@ class AuthenticateApplicationResponse
 end
 
 # {urn:SecurityServer}addPrincipalToGroup
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class AddPrincipalToGroup
   attr_accessor :in0
   attr_accessor :in1
@@ -416,6 +372,8 @@ class AddPrincipalToGroupResponse
 end
 
 # {urn:SecurityServer}findRoleByName
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class FindRoleByName
   attr_accessor :in0
   attr_accessor :in1
@@ -427,6 +385,7 @@ class FindRoleByName
 end
 
 # {urn:SecurityServer}findRoleByNameResponse
+#   out - SOAPRole
 class FindRoleByNameResponse
   attr_accessor :out
 
@@ -436,6 +395,8 @@ class FindRoleByNameResponse
 end
 
 # {urn:SecurityServer}addRole
+#   in0 - AuthenticatedToken
+#   in1 - SOAPRole
 class AddRole
   attr_accessor :in0
   attr_accessor :in1
@@ -447,6 +408,7 @@ class AddRole
 end
 
 # {urn:SecurityServer}addRoleResponse
+#   out - SOAPRole
 class AddRoleResponse
   attr_accessor :out
 
@@ -456,6 +418,8 @@ class AddRoleResponse
 end
 
 # {urn:SecurityServer}findPrincipalByToken
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class FindPrincipalByToken
   attr_accessor :in0
   attr_accessor :in1
@@ -467,6 +431,7 @@ class FindPrincipalByToken
 end
 
 # {urn:SecurityServer}findPrincipalByTokenResponse
+#   out - SOAPPrincipal
 class FindPrincipalByTokenResponse
   attr_accessor :out
 
@@ -476,6 +441,9 @@ class FindPrincipalByTokenResponse
 end
 
 # {urn:SecurityServer}isGroupMember
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class IsGroupMember
   attr_accessor :in0
   attr_accessor :in1
@@ -489,6 +457,7 @@ class IsGroupMember
 end
 
 # {urn:SecurityServer}isGroupMemberResponse
+#   out - SOAP::SOAPBoolean
 class IsGroupMemberResponse
   attr_accessor :out
 
@@ -498,6 +467,8 @@ class IsGroupMemberResponse
 end
 
 # {urn:SecurityServer}searchGroups
+#   in0 - AuthenticatedToken
+#   in1 - ArrayOfSearchRestriction
 class SearchGroups
   attr_accessor :in0
   attr_accessor :in1
@@ -509,6 +480,7 @@ class SearchGroups
 end
 
 # {urn:SecurityServer}searchGroupsResponse
+#   out - ArrayOfSOAPGroup
 class SearchGroupsResponse
   attr_accessor :out
 
@@ -517,25 +489,10 @@ class SearchGroupsResponse
   end
 end
 
-# {urn:SecurityServer}getDomain
-class GetDomain
-  attr_accessor :in0
-
-  def initialize(in0 = nil)
-    @in0 = in0
-  end
-end
-
-# {urn:SecurityServer}getDomainResponse
-class GetDomainResponse
-  attr_accessor :out
-
-  def initialize(out = nil)
-    @out = out
-  end
-end
-
 # {urn:SecurityServer}removeAttributeFromPrincipal
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class RemoveAttributeFromPrincipal
   attr_accessor :in0
   attr_accessor :in1
@@ -554,7 +511,30 @@ class RemoveAttributeFromPrincipalResponse
   end
 end
 
+# {urn:SecurityServer}getDomain
+#   in0 - AuthenticatedToken
+class GetDomain
+  attr_accessor :in0
+
+  def initialize(in0 = nil)
+    @in0 = in0
+  end
+end
+
+# {urn:SecurityServer}getDomainResponse
+#   out - SOAP::SOAPString
+class GetDomainResponse
+  attr_accessor :out
+
+  def initialize(out = nil)
+    @out = out
+  end
+end
+
 # {urn:SecurityServer}isRoleMember
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class IsRoleMember
   attr_accessor :in0
   attr_accessor :in1
@@ -568,6 +548,7 @@ class IsRoleMember
 end
 
 # {urn:SecurityServer}isRoleMemberResponse
+#   out - SOAP::SOAPBoolean
 class IsRoleMemberResponse
   attr_accessor :out
 
@@ -577,6 +558,8 @@ class IsRoleMemberResponse
 end
 
 # {urn:SecurityServer}removeRole
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class RemoveRole
   attr_accessor :in0
   attr_accessor :in1
@@ -594,6 +577,9 @@ class RemoveRoleResponse
 end
 
 # {urn:SecurityServer}removePrincipalFromRole
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class RemovePrincipalFromRole
   attr_accessor :in0
   attr_accessor :in1
@@ -613,6 +599,8 @@ class RemovePrincipalFromRoleResponse
 end
 
 # {urn:SecurityServer}addGroup
+#   in0 - AuthenticatedToken
+#   in1 - SOAPGroup
 class AddGroup
   attr_accessor :in0
   attr_accessor :in1
@@ -624,6 +612,7 @@ class AddGroup
 end
 
 # {urn:SecurityServer}addGroupResponse
+#   out - SOAPGroup
 class AddGroupResponse
   attr_accessor :out
 
@@ -632,7 +621,60 @@ class AddGroupResponse
   end
 end
 
+# {urn:SecurityServer}updateGroup
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
+#   in3 - SOAP::SOAPBoolean
+class UpdateGroup
+  attr_accessor :in0
+  attr_accessor :in1
+  attr_accessor :in2
+  attr_accessor :in3
+
+  def initialize(in0 = nil, in1 = nil, in2 = nil, in3 = nil)
+    @in0 = in0
+    @in1 = in1
+    @in2 = in2
+    @in3 = in3
+  end
+end
+
+# {urn:SecurityServer}updateGroupResponse
+class UpdateGroupResponse
+  def initialize
+  end
+end
+
+# {urn:SecurityServer}createPrincipalToken
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - ArrayOfValidationFactor
+class CreatePrincipalToken
+  attr_accessor :in0
+  attr_accessor :in1
+  attr_accessor :in2
+
+  def initialize(in0 = nil, in1 = nil, in2 = nil)
+    @in0 = in0
+    @in1 = in1
+    @in2 = in2
+  end
+end
+
+# {urn:SecurityServer}createPrincipalTokenResponse
+#   out - SOAP::SOAPString
+class CreatePrincipalTokenResponse
+  attr_accessor :out
+
+  def initialize(out = nil)
+    @out = out
+  end
+end
+
 # {urn:SecurityServer}findRoleMemberships
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class FindRoleMemberships
   attr_accessor :in0
   attr_accessor :in1
@@ -644,6 +686,7 @@ class FindRoleMemberships
 end
 
 # {urn:SecurityServer}findRoleMembershipsResponse
+#   out - ArrayOfString
 class FindRoleMembershipsResponse
   attr_accessor :out
 
@@ -653,6 +696,7 @@ class FindRoleMembershipsResponse
 end
 
 # {urn:SecurityServer}getCacheTime
+#   in0 - AuthenticatedToken
 class GetCacheTime
   attr_accessor :in0
 
@@ -662,6 +706,7 @@ class GetCacheTime
 end
 
 # {urn:SecurityServer}getCacheTimeResponse
+#   out - SOAP::SOAPLong
 class GetCacheTimeResponse
   attr_accessor :out
 
@@ -671,6 +716,8 @@ class GetCacheTimeResponse
 end
 
 # {urn:SecurityServer}removePrincipal
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class RemovePrincipal
   attr_accessor :in0
   attr_accessor :in1
@@ -688,6 +735,8 @@ class RemovePrincipalResponse
 end
 
 # {urn:SecurityServer}resetPrincipalCredential
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class ResetPrincipalCredential
   attr_accessor :in0
   attr_accessor :in1
@@ -705,6 +754,7 @@ class ResetPrincipalCredentialResponse
 end
 
 # {urn:SecurityServer}findAllRoleNames
+#   in0 - AuthenticatedToken
 class FindAllRoleNames
   attr_accessor :in0
 
@@ -714,6 +764,7 @@ class FindAllRoleNames
 end
 
 # {urn:SecurityServer}findAllRoleNamesResponse
+#   out - ArrayOfString
 class FindAllRoleNamesResponse
   attr_accessor :out
 
@@ -723,6 +774,9 @@ class FindAllRoleNamesResponse
 end
 
 # {urn:SecurityServer}addPrincipalToRole
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class AddPrincipalToRole
   attr_accessor :in0
   attr_accessor :in1
@@ -742,6 +796,8 @@ class AddPrincipalToRoleResponse
 end
 
 # {urn:SecurityServer}invalidatePrincipalToken
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class InvalidatePrincipalToken
   attr_accessor :in0
   attr_accessor :in1
@@ -759,6 +815,8 @@ class InvalidatePrincipalTokenResponse
 end
 
 # {urn:SecurityServer}searchPrincipals
+#   in0 - AuthenticatedToken
+#   in1 - ArrayOfSearchRestriction
 class SearchPrincipals
   attr_accessor :in0
   attr_accessor :in1
@@ -770,6 +828,7 @@ class SearchPrincipals
 end
 
 # {urn:SecurityServer}searchPrincipalsResponse
+#   out - ArrayOfSOAPPrincipal
 class SearchPrincipalsResponse
   attr_accessor :out
 
@@ -779,6 +838,8 @@ class SearchPrincipalsResponse
 end
 
 # {urn:SecurityServer}findGroupByName
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class FindGroupByName
   attr_accessor :in0
   attr_accessor :in1
@@ -790,6 +851,7 @@ class FindGroupByName
 end
 
 # {urn:SecurityServer}findGroupByNameResponse
+#   out - SOAPGroup
 class FindGroupByNameResponse
   attr_accessor :out
 
@@ -799,6 +861,7 @@ class FindGroupByNameResponse
 end
 
 # {urn:SecurityServer}findAllGroupNames
+#   in0 - AuthenticatedToken
 class FindAllGroupNames
   attr_accessor :in0
 
@@ -808,6 +871,7 @@ class FindAllGroupNames
 end
 
 # {urn:SecurityServer}findAllGroupNamesResponse
+#   out - ArrayOfString
 class FindAllGroupNamesResponse
   attr_accessor :out
 
@@ -817,6 +881,9 @@ class FindAllGroupNamesResponse
 end
 
 # {urn:SecurityServer}addAttributeToPrincipal
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAPAttribute
 class AddAttributeToPrincipal
   attr_accessor :in0
   attr_accessor :in1
@@ -836,6 +903,9 @@ class AddAttributeToPrincipalResponse
 end
 
 # {urn:SecurityServer}removePrincipalFromGroup
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
 class RemovePrincipalFromGroup
   attr_accessor :in0
   attr_accessor :in1
@@ -855,6 +925,8 @@ class RemovePrincipalFromGroupResponse
 end
 
 # {urn:SecurityServer}findGroupMemberships
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class FindGroupMemberships
   attr_accessor :in0
   attr_accessor :in1
@@ -866,6 +938,7 @@ class FindGroupMemberships
 end
 
 # {urn:SecurityServer}findGroupMembershipsResponse
+#   out - ArrayOfString
 class FindGroupMembershipsResponse
   attr_accessor :out
 
@@ -875,6 +948,9 @@ class FindGroupMembershipsResponse
 end
 
 # {urn:SecurityServer}updatePrincipalCredential
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - PasswordCredential
 class UpdatePrincipalCredential
   attr_accessor :in0
   attr_accessor :in1
@@ -893,7 +969,36 @@ class UpdatePrincipalCredentialResponse
   end
 end
 
+# {urn:SecurityServer}authenticatePrincipalSimple
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAP::SOAPString
+class AuthenticatePrincipalSimple
+  attr_accessor :in0
+  attr_accessor :in1
+  attr_accessor :in2
+
+  def initialize(in0 = nil, in1 = nil, in2 = nil)
+    @in0 = in0
+    @in1 = in1
+    @in2 = in2
+  end
+end
+
+# {urn:SecurityServer}authenticatePrincipalSimpleResponse
+#   out - SOAP::SOAPString
+class AuthenticatePrincipalSimpleResponse
+  attr_accessor :out
+
+  def initialize(out = nil)
+    @out = out
+  end
+end
+
 # {urn:SecurityServer}updatePrincipalAttribute
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - SOAPAttribute
 class UpdatePrincipalAttribute
   attr_accessor :in0
   attr_accessor :in1
@@ -913,6 +1018,7 @@ class UpdatePrincipalAttributeResponse
 end
 
 # {urn:SecurityServer}findAllPrincipalNames
+#   in0 - AuthenticatedToken
 class FindAllPrincipalNames
   attr_accessor :in0
 
@@ -922,6 +1028,7 @@ class FindAllPrincipalNames
 end
 
 # {urn:SecurityServer}findAllPrincipalNamesResponse
+#   out - ArrayOfString
 class FindAllPrincipalNamesResponse
   attr_accessor :out
 
@@ -931,6 +1038,8 @@ class FindAllPrincipalNamesResponse
 end
 
 # {urn:SecurityServer}searchRoles
+#   in0 - AuthenticatedToken
+#   in1 - ArrayOfSearchRestriction
 class SearchRoles
   attr_accessor :in0
   attr_accessor :in1
@@ -942,6 +1051,7 @@ class SearchRoles
 end
 
 # {urn:SecurityServer}searchRolesResponse
+#   out - ArrayOfSOAPRole
 class SearchRolesResponse
   attr_accessor :out
 
@@ -951,6 +1061,7 @@ class SearchRolesResponse
 end
 
 # {urn:SecurityServer}isCacheEnabled
+#   in0 - AuthenticatedToken
 class IsCacheEnabled
   attr_accessor :in0
 
@@ -960,6 +1071,7 @@ class IsCacheEnabled
 end
 
 # {urn:SecurityServer}isCacheEnabledResponse
+#   out - SOAP::SOAPBoolean
 class IsCacheEnabledResponse
   attr_accessor :out
 
@@ -969,6 +1081,9 @@ class IsCacheEnabledResponse
 end
 
 # {urn:SecurityServer}addPrincipal
+#   in0 - AuthenticatedToken
+#   in1 - SOAPPrincipal
+#   in2 - PasswordCredential
 class AddPrincipal
   attr_accessor :in0
   attr_accessor :in1
@@ -982,6 +1097,7 @@ class AddPrincipal
 end
 
 # {urn:SecurityServer}addPrincipalResponse
+#   out - SOAPPrincipal
 class AddPrincipalResponse
   attr_accessor :out
 
@@ -991,6 +1107,9 @@ class AddPrincipalResponse
 end
 
 # {urn:SecurityServer}isValidPrincipalToken
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
+#   in2 - ArrayOfValidationFactor
 class IsValidPrincipalToken
   attr_accessor :in0
   attr_accessor :in1
@@ -1004,6 +1123,7 @@ class IsValidPrincipalToken
 end
 
 # {urn:SecurityServer}isValidPrincipalTokenResponse
+#   out - SOAP::SOAPBoolean
 class IsValidPrincipalTokenResponse
   attr_accessor :out
 
@@ -1013,6 +1133,8 @@ class IsValidPrincipalTokenResponse
 end
 
 # {urn:SecurityServer}removeGroup
+#   in0 - AuthenticatedToken
+#   in1 - SOAP::SOAPString
 class RemoveGroup
   attr_accessor :in0
   attr_accessor :in1
@@ -1030,6 +1152,8 @@ class RemoveGroupResponse
 end
 
 # {urn:SecurityServer}authenticatePrincipal
+#   in0 - AuthenticatedToken
+#   in1 - PrincipalAuthenticationContext
 class AuthenticatePrincipal
   attr_accessor :in0
   attr_accessor :in1
@@ -1041,6 +1165,7 @@ class AuthenticatePrincipal
 end
 
 # {urn:SecurityServer}authenticatePrincipalResponse
+#   out - SOAP::SOAPString
 class AuthenticatePrincipalResponse
   attr_accessor :out
 

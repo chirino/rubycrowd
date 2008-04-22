@@ -1,0 +1,23 @@
+= Documentation =
+http://confluence.atlassian.com/display/CROWD/SOAP+API
+http://dev.ctor.org/soap4r
+
+= Regenerate SOAP code from WSDL =
+
+This is useful for updating the code when a new version of Crowd comes out.
+
+$ cd <project-dir>/wsdl
+$ mkdir <crowd-version>
+$ cd <crowd-version>
+$ curl -o SecurityServer.wsdl http://localhost:8095/crowd/services/SecurityServer?wsdl
+$ wsdl2ruby.rb --wsdl SecurityServer.wsdl --type client
+
+# note previous versions required --force for the wsdl2ruby
+
+Copy default.rb, defaultDriver.rb and defaultMappingRegistry.rb to <project-dir>/lib/crowd
+
+Fix the imports in defaultDriver.rb and defaultMappingRegistry.rb so they have the crowd/ prefix
+
+Adjust crowd.rb as necessary
+
+Use SecurityServerClient.rb as a guide.  SecurityServerClient.rb does not need to be checked into the project.
