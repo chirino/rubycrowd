@@ -200,7 +200,14 @@ class Crowd
   end
   
   def configuration
-    config_file = File.join(File.dirname(__FILE__), 'crowd.yml')
+    if defined?(CROWD_CONFIG_PATH)
+      config_file = CROWD_CONFIG_PATH
+    elsif defined?(RAILS_ROOT) and File.exists?(File.join(RAILS_ROOT, 'config/crowd.yml'))
+      config_file = File.join(RAILS_ROOT, 'config/crowd.yml')
+    else  
+      config_file = File.join(File.dirname(__FILE__), 'crowd.yml')
+    end
+    
     YAML::load(IO.read(config_file))
   end
 
