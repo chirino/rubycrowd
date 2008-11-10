@@ -18,7 +18,9 @@ class CrowdGroupTest < Test::Unit::TestCase
   end
   
   def teardown
+    $DEBUG = true
     try { @crowd.delete_group! @group_1 }
+    $DEBUG = false
     try { @crowd.delete_user! @user_1.name }
     try { @crowd.delete_user! @user_2.name }
     @crowd = nil
@@ -28,7 +30,7 @@ class CrowdGroupTest < Test::Unit::TestCase
     begin
       yield
     rescue SOAP::FaultError
-      #p $!
+      p $!
     end
   end
 
@@ -64,6 +66,11 @@ class CrowdGroupTest < Test::Unit::TestCase
     users = @crowd.find_users_in_group(rc[0]);
     # p users
     assert_equal [@user_1.name, @user_2.name].sort, users.sort
+    
+    @crowd.remove_user_from_group(@user_1.name, rc[0])
+    users = @crowd.find_users_in_group(rc[0]);
+    assert_equal [@user_2.name].sort, users.sort
+    
   end
 
 end

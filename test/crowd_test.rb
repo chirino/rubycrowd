@@ -61,7 +61,7 @@ class CrowdTest < Test::Unit::TestCase
   
   def test_authenticate_invalid_user
     user_name = "ZZZZZZZZZZZZ"
-    assert_soap_fault "No such account" do
+    assert_soap_fault "Login failed #{user_name}" do
       token = @crowd.authenticate_user(user_name, @user_1.password)
     end
   end
@@ -69,7 +69,7 @@ class CrowdTest < Test::Unit::TestCase
   def test_authenticate_invalid_password
     #assert_soap_fault "Failed to authenticate principal, password was invalid" do
     # TODO fix in Custom Java Code
-    assert_soap_fault "Login failed" do
+    assert_soap_fault "Login failed #{@user_1.name}" do
       @crowd.authenticate_user(@user_1.name, @user_1.password.reverse)
     end
   end
@@ -85,7 +85,8 @@ class CrowdTest < Test::Unit::TestCase
     application_name = "crowd"
     #assert_soap_fault "Application: #{application_name} Principal: #{@user_1.name}" do
     # TODO fix message in Custom Java Code
-    assert_soap_fault "Application: #{application_name} Principal: #{@user_1.name}" do
+    assert_soap_fault "com.atlassian.crowd.manager.application.ApplicationAccessDeniedException: " + \
+     "Application: #{application_name} Principal: #{@user_1.name}" do
       @crowd.authenticate_user(@user_1.name, @user_1.password, application_name)
     end
   end
@@ -123,6 +124,25 @@ class CrowdTest < Test::Unit::TestCase
 
   end
   
+  def test_delete_user
+
+    u = @user_2
+    ensure_user_exists @user_2
+
+    user = @crowd.find_by_name u.name
+    assert_equal u.name, user.name
+    assert_equal u.email, user.mail
+    assert_equal u.first_name, user.givenName
+    assert_equal user.last_name, user.sn
+
+    @crowd.delete_user! u.name     
+
+    assert_soap_fault \
+     "Could not find user with name \"#{u.name}\" in any of the assigned directories to application: ruby" do
+      @crowd.find_by_name(u.name)
+    end  
+  end
+  
   def test_add_duplicate_user_name
     assert_soap_fault "Principal already exists with name #{@user_1.name}" do
       user = @crowd.add_user(@user_1.name, "X#{@user_1.email}", "X#{@user_1.first_name}", "X#{@user_1.last_name}", "X#{@user_1.password}" )
@@ -130,7 +150,7 @@ class CrowdTest < Test::Unit::TestCase
   end
   
   def test_add_duplicate_email
-    assert_soap_fault "Unable to write to database; nested exception is: \n\tcom.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException: Duplicate entry 'jane.test@chariotsolutions.com' for key 3" do
+    assert_soap_fault "PreparedStatementCallback; SQL [INSERT INTO user (user_name, first_name, last_name, email, company, title, phone, country, account_disabled, password, created) VALUES (?,?,?,?,?,?,?,?,?,?,?)]; Duplicate entry 'jane.test@chariotsolutions.com' for key 3; nested exception is com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException: Duplicate entry 'jane.test@chariotsolutions.com' for key 3" do
       user = @crowd.add_user("X#{@user_1.name}", @user_1.email, "X#{@user_1.first_name}", "X#{@user_1.last_name}", "X#{@user_1.password}" )
     end
   end
@@ -243,7 +263,7 @@ class CrowdTest < Test::Unit::TestCase
   
   def test_reset_password
     @crowd.reset_password! @user_1.name
-    assert_soap_fault "Login failed" do
+    assert_soap_fault "Login failed #{@user_1.name}" do
       token = @crowd.authenticate_user(@user_1.name, @user_1.password)
     end
   end
