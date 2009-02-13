@@ -13,4 +13,6 @@ user_2:
     last_name: Test
     password: password
     email: joe.test@chariotsolutions.com
+    groups: 
+        - registered-users
     

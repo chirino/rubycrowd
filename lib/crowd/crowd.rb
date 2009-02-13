@@ -25,7 +25,16 @@ class Crowd
     # run ruby with -d to see SOAP wiredumps.
     @server.wiredump_dev = STDERR if $DEBUG or @debug
 
-    authenticate_application @configuration['application_name'], @configuration['application_password']
+#    retries = 0
+#    begin
+      authenticate_application @configuration['application_name'], @configuration['application_password']
+#    rescue SOAP::EmptyResponseError
+#      if retries < 5
+#        retry
+#      else
+#        raise
+#      end
+#    end
   end  
     
   # TODO interpret errors and throw more useful exceptions Invalid Username, Invalid Password, Not Authorized, No such application etc
