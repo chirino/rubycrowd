@@ -1,5 +1,5 @@
-require 'default.rb'
-require 'defaultMappingRegistry.rb'
+require 'crowd/default.rb'
+require 'crowd/defaultMappingRegistry.rb'
 require 'soap/rpc/driver'
 
 class SecurityServerPortType < ::SOAP::RPC::Driver

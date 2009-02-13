@@ -1,4 +1,4 @@
-require 'default.rb'
+require 'crowd/default.rb'
 require 'soap/mapping'
 
 module DefaultMappingRegistry
